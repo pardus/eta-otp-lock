@@ -40,6 +40,9 @@ def create_gui(self):
         self.ui_stack_main.add_named(self.ui_box_main, "main")
 
         self.ui_box_main.pack_start(Gtk.Label(label=_("Pin is not available.")), False, False, 0)
+        
+        self.ui_label_status = Gtk.Label(label=_("....."))
+        self.ui_box_main.pack_start(self.ui_label_status, False, False, 0)
 
         self.ui_button_newotp = Gtk.Button(label=_("Generate a new Pin"))
         self.ui_box_main.pack_start(self.ui_button_newotp, False, False, 0)
@@ -50,7 +53,7 @@ def create_gui(self):
 
         self.ui_button_fromkey = Gtk.Button(label=_("Generate Pin from key"))
         self.ui_box_main.pack_start(self.ui_button_fromkey, False, False, 0)
-
+        
 ########## Otp settings page ##########
 
         self.ui_box_settings = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -68,6 +71,24 @@ def create_gui(self):
         self.ui_button_delete = Gtk.Button(label=_("Remove Pin"))
         self.ui_box_settings.pack_start(self.ui_button_delete, False, False, 0)
 
+########## Otp settings Users ##########
+
+        self.ui_button_createuser = Gtk.Button(label=_("Create Branch Accounts"))
+        self.ui_box_settings.pack_start(self.ui_button_createuser, False, False, 0)
+        
+        self.ui_button_setpasswdusers = Gtk.Button(label=_("Set passwords Branch Accounts"))
+        self.ui_box_settings.pack_start(self.ui_button_setpasswdusers, False, False, 0)
+        
+        self.ui_button_deluser = Gtk.Button(label=_("Del Branch Accounts"))
+        self.ui_box_settings.pack_start(self.ui_button_deluser, False, False, 0)
+        
+        self.ui_button_delogretmen = Gtk.Button(label=_("Delete Teacher Account"))
+        self.ui_box_settings.pack_start(self.ui_button_delogretmen, False, False, 0)
+        
+        self.ui_button_delogrenci = Gtk.Button(label=_("Delete Limited Access Account"))
+        self.ui_box_settings.pack_start(self.ui_button_delogrenci, False, False, 0)
+        
+        
 ########## QR / Key page ##########
 
         self.ui_box_qr = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)

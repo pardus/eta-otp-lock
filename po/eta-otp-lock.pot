@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-30 17:51+0300\n"
+"POT-Creation-Date: 2026-03-27 11:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,46 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: src/MainWindow.py:100
-msgid "Invalid Pin"
-msgstr ""
-
-#: src/MainWindow.py:100
-msgid "Pin user is not you"
-msgstr ""
-
-#: src/MainWindow.py:105
-msgid "Failed to read Pin file"
-msgstr ""
-
-#: src/MainWindow.py:117
-msgid "Error"
-msgstr ""
-
-#: src/MainWindow.py:117
-msgid "Failed to export Pin key file"
-msgstr ""
-
-#: src/MainWindow.py:160
-msgid "Select a File"
-msgstr ""
-
-#: src/MainWindow.py:168 src/MainWindow.py:189
-msgid "Pin keys"
-msgstr ""
-
-#: src/MainWindow.py:181
-msgid "Save a File"
-msgstr ""
-
-#: src/MainWindow.py:204
-msgid "Enter a Secret"
-msgstr ""
-
-#: src/MainWindow.py:216
-msgid "Enter your key here"
-msgstr ""
 
 #: src/gui.py:17
 msgid "Pin Login Settings"
@@ -66,37 +26,144 @@ msgid "Pin is not available."
 msgstr ""
 
 #: src/gui.py:44
-msgid "Generate a new Pin"
+msgid "....."
 msgstr ""
 
 #: src/gui.py:47
+msgid "Generate a new Pin"
+msgstr ""
+
+#: src/gui.py:50
 msgid "Import Pin from File"
 msgstr ""
 
-#: src/gui.py:51
+#: src/gui.py:54
 msgid "Generate Pin from key"
 msgstr ""
 
-#: src/gui.py:60
+#: src/gui.py:63
 msgid "Pin available."
 msgstr ""
 
-#: src/gui.py:62
+#: src/gui.py:65
 msgid "Show Pin QR/Key"
 msgstr ""
 
-#: src/gui.py:65
+#: src/gui.py:68
 msgid "Export Pin to file"
 msgstr ""
 
-#: src/gui.py:68
+#: src/gui.py:71
 msgid "Remove Pin"
 msgstr ""
 
+#: src/gui.py:76
+msgid "Create Branch Accounts"
+msgstr ""
+
+#: src/gui.py:79
+msgid "Set passwords Branch Accounts"
+msgstr ""
+
+#: src/gui.py:82
+msgid "Del Branch Accounts"
+msgstr ""
+
+#: src/gui.py:85
+msgid "Delete Teacher Account"
+msgstr ""
+
 #: src/gui.py:88
+msgid "Delete Limited Access Account"
+msgstr ""
+
+#: src/gui.py:109
 msgid "Back"
 msgstr ""
 
-#: src/gui.py:89
+#: src/gui.py:110
 msgid "Help"
+msgstr ""
+
+#: src/MainWindow.py:75
+msgid "Creating users. Please wait..."
+msgstr ""
+
+#: src/MainWindow.py:77 src/MainWindow.py:110 src/MainWindow.py:113
+#: src/MainWindow.py:138 src/MainWindow.py:141 src/MainWindow.py:164
+#: src/MainWindow.py:172
+msgid "Info"
+msgstr ""
+
+#: src/MainWindow.py:77
+msgid ""
+"Branch Accounts are being added. Please wait..."
+msgstr ""
+
+#: src/MainWindow.py:110
+msgid "Branch Accounts Added..."
+msgstr ""
+
+#: src/MainWindow.py:113
+msgid "Branch Accounts passwords will be changed."
+msgstr ""
+
+#: src/MainWindow.py:138
+msgid "Branch Accounts passwords have been changed."
+msgstr ""
+
+#: src/MainWindow.py:141
+msgid "Branch Accounts are being deleted. Please wait..."
+msgstr ""
+
+#: src/MainWindow.py:164
+msgid "Branch Accounts Deleted."
+msgstr ""
+
+#: src/MainWindow.py:172
+msgid "User Deleted."
+msgstr ""
+
+#: src/MainWindow.py:211
+msgid "Failed to read Pin file"
+msgstr ""
+
+#: src/MainWindow.py:222
+msgid "Error"
+msgstr ""
+
+#: src/MainWindow.py:222
+msgid "Failed to export Pin key file"
+msgstr ""
+
+#: src/MainWindow.py:256
+msgid "Select a File"
+msgstr ""
+
+#: src/MainWindow.py:264 src/MainWindow.py:282
+msgid "Pin keys"
+msgstr ""
+
+#: src/MainWindow.py:274
+msgid "Save a File"
+msgstr ""
+
+#: src/MainWindow.py:297
+msgid "Enter a Secret"
+msgstr ""
+
+#: src/MainWindow.py:306
+msgid "Enter your key here"
+msgstr ""
+
+#: src/MainWindow.py:315
+msgid "Enter a Passwd"
+msgstr ""
+
+#: src/MainWindow.py:333
+msgid "Enter password"
+msgstr ""
+
+#: src/MainWindow.py:336
+msgid "Enter text"
 msgstr ""

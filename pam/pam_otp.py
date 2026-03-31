@@ -1,63 +1,51 @@
 #!/usr/bin/env python3
 import os
-import pwd
-import grp
-import traceback
 import pyotp
 import json
 
-"""
-{
-    "pingu"  : "JBSWY3DPEHPK3PXP",
-    "@users" : "4EF6A46F1BCF2345"
-}
-"""
+CONFIG_FILE = "/etc/otp-secrets.json"
 
-## Pam config (common-auth)
-## before pam_unix:
-# auth sufficient pam_python.so /usr/libexec/pam_otp.py
-
-config_file = "/etc/otp-secrets.json"
+# OTP kullanılmayacak kullanıcılar
+SKIP_USERS = ["root", "etapadmin"]
 
 def pam_sm_authenticate(pamh, flags, argv):
-    # fetch username
+    # kullanıcıyı al
     try:
         user = pamh.get_user(None)
-    except Exception as e:
+    except:
         return pamh.PAM_AUTH_ERR
 
-    # fetch otp
+    # 🔥 bu kullanıcılar OTP kullanmaz → direkt skip
+    if user in SKIP_USERS:
+        return pamh.PAM_IGNORE
+
+    # fetch OTP (senin yapı aynen korunuyor)
     if pamh.authtok is None:
         try:
-            conv = pamh.conversation(pamh.Message(pamh.PAM_PROMPT_ECHO_OFF, "Password: "))
+            conv = pamh.conversation(
+                pamh.Message(pamh.PAM_PROMPT_ECHO_OFF, "Password: ")
+            )
             pamh.authtok = conv.resp
         except:
             return pamh.PAM_AUTH_ERR
 
     # read config
-    config = {}
-    if not os.path.isfile(config_file):
-        return pamh.PAM_AUTH_ERR
-    with open(config_file, "r") as f:
+    if not os.path.isfile(CONFIG_FILE):
+        return pamh.PAM_IGNORE   # 🔥 fallback: parola çalışsın
+
+    with open(CONFIG_FILE, "r") as f:
         config = json.load(f)
 
+    if 'global' in config:
+        otp = pyotp.TOTP(config['global'])
 
-    def check_otp(user):
-        otp = pyotp.TOTP(config[user])
-        return (otp.now() == pamh.authtok)
-
-    # check otp by group
-    for group in grp.getgrall():
-        if user in group.gr_mem and f"@{group.gr_name}" in config:
-            if check_otp(f"@{group.gr_name}"):
-                return pamh.PAM_SUCCESS
-
-    # check otp
-    if user in config:
-        if check_otp(user):
+        # ✔ OTP doğruysa giriş
+        if otp.now() == pamh.authtok:
             return pamh.PAM_SUCCESS
 
-    return pamh.PAM_AUTH_ERR
+    # 🔥 OTP yanlış → parola denemeye izin ver
+    return pamh.PAM_IGNORE
+
 
 def pam_sm_setcred(pamh, flags, argv):
     return pamh.PAM_SUCCESS

@@ -6,6 +6,6 @@ Type=Application
 Comment=Otp key settings
 Comment[tr]=Otp anahtar ayarları
 Terminal=false
-Exec=python3 /usr/share/etap/eta-otp/main.py
+Exec=sh -c "pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY python3 /usr/share/etap/eta-otp/main.py"
 Icon=eta-otp
 Categories=Settings;X-Pardus-Apps;
