@@ -11,6 +11,8 @@ import pickle
 import qrcode
 from io import BytesIO
 
+from utils import SafeUnpickler
+
 import locale
 from locale import gettext as _
 
@@ -95,7 +97,7 @@ class MainWindow:
         if filename:
             try:
                 with open(filename, "rb") as f:
-                    data = pickle.load(f)
+                    data = SafeUnpickler(f).load()
                     if data["user"] != os.environ["USER"]:
                         self.info_dialog(_("Invalid Pin"), _("Pin user is not you"))
                     self.secret = base64.b32encode(data["secret"]).decode("utf-8")
