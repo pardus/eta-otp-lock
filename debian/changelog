@@ -1,3 +1,15 @@
+eta-otp-lock (1.0.4) unstable; urgency=medium
+
+  [ Ali Riza KESKIN ]
+  * check otp by group support added
+  * safe unpickler
+
+  [ Hugo Carvalho ]
+  * Add Portuguese lang
+  * Add Portuguese lang and translations
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Mon, 03 Aug 2026 13:57:17 +0300
+
 eta-otp-lock (1.0.3) unstable; urgency=medium
 
   [ Ali Riza KESKIN ]
