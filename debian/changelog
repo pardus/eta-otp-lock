@@ -1,3 +1,10 @@
+eta-otp-lock (1.0.5) unstable; urgency=medium
+
+  [ Ali Riza KESKIN ]
+  * save secret: read secret from stdin
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Wed, 05 Aug 2026 10:05:40 +0300
+
 eta-otp-lock (1.0.4) unstable; urgency=medium
 
   [ Ali Riza KESKIN ]
