@@ -71,7 +71,7 @@ class MainWindow:
     def on_newotp_event(self, widget):
         self.secret = self.generate_secret()
         self.ui_stack_main.set_visible_child_name("settings")
-        subprocess.run(["pkexec", action_file, "save", self.secret])
+        self.save_secret()
 
     def on_show_event(self, widget):
         self.update_qr()
@@ -90,7 +90,7 @@ class MainWindow:
             else:
                 self.secret = self.generate_secret(secret.encode("utf-8"))
             self.ui_stack_main.set_visible_child_name("settings")
-            subprocess.run(["pkexec", action_file, "save", self.secret])
+            self.save_secret()
 
     def on_import_event(self, widget):
         filename = self.open_file()
@@ -100,9 +100,10 @@ class MainWindow:
                     data = SafeUnpickler(f).load()
                     if data["user"] != os.environ["USER"]:
                         self.info_dialog(_("Invalid Pin"), _("Pin user is not you"))
+                        return
                     self.secret = base64.b32encode(data["secret"]).decode("utf-8")
                 self.ui_stack_main.set_visible_child_name("settings")
-                subprocess.run(["pkexec", action_file, "save", self.secret])
+                self.save_secret()
             except:
                 self.info_dialog("ERROR", _("Failed to read Pin file"))
 
@@ -121,6 +122,17 @@ class MainWindow:
 
 
 ########### helper functions ###########
+
+    def save_secret(self):
+        try:
+            subprocess.run(
+                ["pkexec", action_file, "save"],
+                input=self.secret,
+                text=True,
+                check=True
+            )
+        except:
+            self.info_dialog(_("Error"), _("Failed to save Pin"))
 
     def update_qr(self):
         self.ui_label_secret.set_text(self.secret)

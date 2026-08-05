@@ -53,7 +53,8 @@ if __name__ == "__main__":
         else:
             user = input()
         if sys.argv[1] == "save":
-            save(user, sys.argv[2])
+            secret = input()
+            save(user, secret)
         elif sys.argv[1] == "remove":
             remove(user)
         elif sys.argv[1] == "load":
