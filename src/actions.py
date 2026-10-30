@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 import sys
 import os
+import pwd
 import json
+import base64
+import binascii
 
 config_file = "/etc/otp-secrets.json"
 config = {}
@@ -17,19 +20,40 @@ except:
     pass
 
 def find_user(uid):
-    with open("/etc/passwd", "r") as f:
-        for line in f.read().split("\n"):
-            cur = line.split(":")[2]
-            if str(uid) == cur:
-                return line.split(":")[0]
-    return None
+    # pwd goes through nss, so domain (sssd/ldap) users are found too
+    try:
+        return pwd.getpwuid(int(uid)).pw_name
+    except (KeyError, ValueError):
+        return None
 
-def save(user, secret="JBSWY3DPEHPK3PXP"):
-    config[user] = secret
-    with open(config_file, "w") as f:
+def write_config():
+    # create the new file as 0600 from the start, then move it in place
+    tmp_file = config_file + ".tmp"
+    fd = os.open(tmp_file, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "w") as f:
         json.dump(config, f)
-    os.chown(config_file, 0, 0)
-    os.chmod(config_file, 0o600)
+    os.chown(tmp_file, 0, 0)
+    os.chmod(tmp_file, 0o600)
+    os.replace(tmp_file, config_file)
+
+def valid_secret(secret):
+    # pam_otp.py can't use a secret that doesn't decode, it would raise there.
+    # No length limit: the "from key" option in the gui can make short ones.
+    if not secret:
+        return False
+    try:
+        # decoded the same way pyotp does it
+        base64.b32decode(secret + "=" * (-len(secret) % 8), casefold=True)
+    except (binascii.Error, ValueError):
+        return False
+    return True
+
+def save(user, secret):
+    if not valid_secret(secret):
+        print("invalid secret", file=sys.stderr)
+        sys.exit(1)
+    config[user] = secret
+    write_config()
 
 def load(user):
     if user in config:
@@ -38,10 +62,7 @@ def load(user):
 def remove(user):
     if user in config:
         config.pop(user)
-    with open(config_file, "w") as f:
-        json.dump(config, f)
-    os.chown(config_file, 0, 0)
-    os.chmod(config_file, 0o600)
+    write_config()
 
 def status(user):
     return user in config
@@ -52,6 +73,9 @@ if __name__ == "__main__":
             user = find_user(os.environ["PKEXEC_UID"])
         else:
             user = input()
+        if not user:
+            print("user not found", file=sys.stderr)
+            sys.exit(1)
         if sys.argv[1] == "save":
             secret = input()
             save(user, secret)
